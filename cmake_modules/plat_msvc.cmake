@@ -64,7 +64,8 @@ macro(plat_link_and_package)
     target_link_libraries(sith_engine PRIVATE ${SDL2_COMMON_LIBS} version imm32 setupapi gdi32 winmm imm32 ole32 oleaut32 shell32 winmm user32 crypt32 advapi32) # SDL2’s peculiarity that you have to link mingw32 before SDL2main
 
     if(TARGET_CAN_JKGM)
-        target_link_libraries(sith_engine PRIVATE PNG::PNG ZLIB::ZLIB)
+        #target_link_libraries(sith_engine PRIVATE PNG::PNG ZLIB::ZLIB)
+		target_link_libraries(sith_engine PRIVATE libpng ZLIB::ZLIB)
     endif()
 
     if (TARGET_USE_OPENAL)

@@ -1,8 +1,8 @@
-[submodule "libpng"]
-	path = lib/libpng
-	url = https://github.com/glennrp/libpng.git
-	branch = v1.6.39
-	shallow = true
+#[submodule "libpng"]
+#	path = lib/libpng
+#	url = https://github.com/glennrp/libpng.git
+#	branch = v1.6.39
+#	shallow = true
 [submodule "freeglut"]
 	path = lib/freeglut
 	url = https://github.com/FreeGLUTProject/freeglut.git
@@ -13,16 +13,16 @@
 	url = https://github.com/Perlmint/glew-cmake.git
 	branch = master
 	shallow = true
-[submodule "zlib"]
-	path = lib/zlib
-	url = https://github.com/madler/zlib.git
-	branch = v1.2.13
-	shallow = true
-[submodule "GameNetworkingSockets"]
-	path = lib/GameNetworkingSockets
-	url = https://github.com/ValveSoftware/GameNetworkingSockets.git
-	branch = v1.4.1
-	shallow = true
+#[submodule "zlib"]
+#	path = lib/zlib
+#	url = https://github.com/madler/zlib.git
+#	branch = v1.2.13
+#	shallow = true
+#[submodule "GameNetworkingSockets"]
+#	path = lib/GameNetworkingSockets
+#	url = https://github.com/ValveSoftware/GameNetworkingSockets.git
+#	branch = v1.4.1
+#	shallow = true
 [submodule "protobuf"]
 	path = lib/protobuf
 	url = https://github.com/protocolbuffers/protobuf.git

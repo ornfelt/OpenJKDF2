@@ -64,6 +64,7 @@ endif()
 
 message(STATUS "Going to build “zlib 1.2.13” from Git module")
 include(build_zlib)
+#add_subdirectory(lib/zlib)
 
 if(TARGET_USE_PHYSFS)
     message(STATUS "Going to build “PhysFS 3.2.0” from Git module")
@@ -122,8 +123,9 @@ if(TARGET_USE_NOSOCKETS AND NOT TARGET_HOOKS)
     add_definitions(-DPLATFORM_NOSOCKETS)
 endif()
 
-message(STATUS "Going to build “libpng 1.6.39” from Git module")
-include(build_libpng)
+#message(STATUS "Going to build “libpng 1.6.39” from Git module")
+#include(build_libpng)
+add_subdirectory(lib/libpng)
 
 if(TARGET_USE_LIBSMACKER)
     list(APPEND ENGINE_SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/external/libsmacker/smacker.c ${PROJECT_SOURCE_DIR}/src/external/libsmacker/smk_bitstream.c ${PROJECT_SOURCE_DIR}/src/external/libsmacker/smk_hufftree.c)
@@ -248,34 +250,34 @@ endif()
 # Really, really ugly hack, protoc needs some LD_LIBRARY_PATH junk probably but idk
 # WHYYY???? Does protoc not just take relative libz paths???
 # Also why did this break in the first place I didn't change anything??
-if(TARGET_USE_GAMENETWORKINGSOCKETS)
-    if(CMAKE_CROSSCOMPILING)
-        set(HACK_ZLIB_SRC ${ZLIB_HOST_SHARED_LIBRARY_PATH})
-        set(HACK_ZLIB_SRC_DIR ${ZLIB_HOST_SHARED_LIBRARY_DIR})
-    else()
-        set(HACK_ZLIB_SRC ${ZLIB_SHARED_LIBRARY_PATH})
-        set(HACK_ZLIB_SRC_DIR ${ZLIB_SHARED_LIBRARY_DIR})
-    endif()
+#if(TARGET_USE_GAMENETWORKINGSOCKETS)
+#    if(CMAKE_CROSSCOMPILING)
+#        set(HACK_ZLIB_SRC ${ZLIB_HOST_SHARED_LIBRARY_PATH})
+#        set(HACK_ZLIB_SRC_DIR ${ZLIB_HOST_SHARED_LIBRARY_DIR})
+#    else()
+#        set(HACK_ZLIB_SRC ${ZLIB_SHARED_LIBRARY_PATH})
+#        set(HACK_ZLIB_SRC_DIR ${ZLIB_SHARED_LIBRARY_DIR})
+#    endif()
 
 
-    set(GNS_PROTOC_HACK_ZLIB ${GameNetworkingSockets_ROOT}/src/.copied_hack)
-    set(GNS_PROTOC_HACK_ZLIB_DIR ${GameNetworkingSockets_ROOT}/src)
-    set(GNS_PROTOC_HACK_ZLIB_WILDCARD ${GameNetworkingSockets_ROOT}/src/${CMAKE_SHARED_LIBRARY_PREFIX}${ZLIB_HOST_LIBRARIES}${CMAKE_SHARED_LIBRARY_SUFFIX})
+#    set(GNS_PROTOC_HACK_ZLIB ${GameNetworkingSockets_ROOT}/src/.copied_hack)
+#    set(GNS_PROTOC_HACK_ZLIB_DIR ${GameNetworkingSockets_ROOT}/src)
+#    set(GNS_PROTOC_HACK_ZLIB_WILDCARD ${GameNetworkingSockets_ROOT}/src/${CMAKE_SHARED_LIBRARY_PREFIX}${ZLIB_HOST_LIBRARIES}${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 
-    add_custom_command(OUTPUT "${GNS_PROTOC_HACK_ZLIB}" 
-                       COMMAND ${CMAKE_COMMAND} -E make_directory "${GNS_PROTOC_HACK_ZLIB_DIR}"
-                       COMMAND ${CMAKE_COMMAND} -E make_directory "${HACK_ZLIB_SRC_DIR}"
-                       COMMAND ${CMAKE_COMMAND} -E touch "${HACK_ZLIB_SRC_DIR}/hack.dylib"
-                       COMMAND ${CMAKE_COMMAND} -E touch "${HACK_ZLIB_SRC_DIR}/hack.dll"
-                       COMMAND ${CMAKE_COMMAND} -E touch "${HACK_ZLIB_SRC_DIR}/hack.so"
-                       COMMAND ${CMAKE_COMMAND} -E copy "${HACK_ZLIB_SRC_DIR}/*.dylib" "${GNS_PROTOC_HACK_ZLIB_DIR}"
-                       COMMAND ${CMAKE_COMMAND} -E copy "${HACK_ZLIB_SRC_DIR}/*.dll" "${GNS_PROTOC_HACK_ZLIB_DIR}"
-                       COMMAND ${CMAKE_COMMAND} -E copy "${HACK_ZLIB_SRC_DIR}/*.so" "${GNS_PROTOC_HACK_ZLIB_DIR}"
-                       COMMAND ${CMAKE_COMMAND} -E touch "${GNS_PROTOC_HACK_ZLIB}"
-                       )
-    add_custom_target(GNS_HACK_ZLIB DEPENDS ${GNS_PROTOC_HACK_ZLIB})
-    add_dependencies(GameNetworkingSockets::GameNetworkingSockets GNS_HACK_ZLIB)
-    add_dependencies(GameNetworkingSockets::GameNetworkingSockets_s GNS_HACK_ZLIB)
-    add_dependencies(GNS_HACK_ZLIB PROTOBUF)
-endif()
+#    add_custom_command(OUTPUT "${GNS_PROTOC_HACK_ZLIB}" 
+#                       COMMAND ${CMAKE_COMMAND} -E make_directory "${GNS_PROTOC_HACK_ZLIB_DIR}"
+#                       COMMAND ${CMAKE_COMMAND} -E make_directory "${HACK_ZLIB_SRC_DIR}"
+#                       COMMAND ${CMAKE_COMMAND} -E touch "${HACK_ZLIB_SRC_DIR}/hack.dylib"
+#                       COMMAND ${CMAKE_COMMAND} -E touch "${HACK_ZLIB_SRC_DIR}/hack.dll"
+#                       COMMAND ${CMAKE_COMMAND} -E touch "${HACK_ZLIB_SRC_DIR}/hack.so"
+#                       COMMAND ${CMAKE_COMMAND} -E copy "${HACK_ZLIB_SRC_DIR}/*.dylib" "${GNS_PROTOC_HACK_ZLIB_DIR}"
+#                       COMMAND ${CMAKE_COMMAND} -E copy "${HACK_ZLIB_SRC_DIR}/*.dll" "${GNS_PROTOC_HACK_ZLIB_DIR}"
+#                       COMMAND ${CMAKE_COMMAND} -E copy "${HACK_ZLIB_SRC_DIR}/*.so" "${GNS_PROTOC_HACK_ZLIB_DIR}"
+#                       COMMAND ${CMAKE_COMMAND} -E touch "${GNS_PROTOC_HACK_ZLIB}"
+#                       )
+#    add_custom_target(GNS_HACK_ZLIB DEPENDS ${GNS_PROTOC_HACK_ZLIB})
+#    add_dependencies(GameNetworkingSockets::GameNetworkingSockets GNS_HACK_ZLIB)
+#    add_dependencies(GameNetworkingSockets::GameNetworkingSockets_s GNS_HACK_ZLIB)
+#    add_dependencies(GNS_HACK_ZLIB PROTOBUF)
+#endif()
