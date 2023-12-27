@@ -55,8 +55,8 @@ openjkdf2-64.dsym/
 find_noxrefs.py
 imports_conv.py
 cogidk.py
-src/globals.c
-src/globals.h
+#src/globals.c
+#src/globals.h
 symbols-tmp.syms
 symbols.ld
 symbols.ld.cog
