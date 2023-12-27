@@ -1,3 +1,19 @@
+# Notes
+
+To build on Windows:
+
+1. Follow instructions from BUILDING.md
+
+2. Use CMake GUI to generate build files.
+
+3. Try to build in Debug. Some stuff will fail...
+
+4. Build in Release to generate required DLL's (or build them manually / change target DLL's).
+
+5. <s>Open build\GameNetworkingSockets\GameNetworkingSockets.sln -> Right click GameNetworkingSockets -> Properties -> All Configurations -> C/C++ -> Code Generation -> Set Runtime Library to Multi-threaded Debug (/Mtd). Save and close.</s>
+
+6. Build in Debug again!
+
 # OpenJKDF2
 
 ![MacOS Screenshot](docs/images/screenshot.png)
