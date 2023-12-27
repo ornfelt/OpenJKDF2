@@ -97,6 +97,7 @@ Jones_res/*
 build_emcc/*
 #JK.h
 out/*
+build/
 build_linux64_/*
 build_linux64_flatpak/*
 build_linux_arm64_flatpak/*

@@ -202,6 +202,9 @@ file(GLOB FCASEOPEN_SRCS ${PROJECT_SOURCE_DIR}/src/external/fcaseopen/*.c)
 list(APPEND ENGINE_SOURCE_FILES ${FCASEOPEN_SRCS})
 include_directories(${PROJECT_SOURCE_DIR}/src/external/fcaseopen)
 
+# libpng
+include_directories(${PROJECT_SOURCE_DIR}/lib/libpng/include)
+
 # The rest of the conditional/TARGET_* dependencies
 include(cmake_modules/config_platform_deps.cmake)
 

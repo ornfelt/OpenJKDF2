@@ -47,8 +47,8 @@ ExternalProject_Add(
                            ${GAMENETWORKINGSOCKETS_PROTOC_EXECUTABLE}
                            ${GAMENETWORKINGSOCKETS_EXTRA_ARGS}
     DEPENDS                PROTOBUF ${GAMENETWORKINGSOCKETS_DEPENDS}
-    PATCH_COMMAND          git restore CMakeLists.txt src/CMakeLists.txt &&
-                           git apply -v ${CMAKE_SOURCE_DIR}/cmake_modules/GameNetworkingSockets_v1.4.1.patch
+	#PATCH_COMMAND          git restore CMakeLists.txt src/CMakeLists.txt && git apply -v ${CMAKE_SOURCE_DIR}/cmake_modules/GameNetworkingSockets_v1.4.1.patch
+    PATCH_COMMAND          git apply -v ${CMAKE_SOURCE_DIR}/cmake_modules/GameNetworkingSockets_v1.4.1.patch
     BUILD_BYPRODUCTS       ${GameNetworkingSockets_SHARED_LIBRARY_PATH} ${GameNetworkingSockets_STATIC_LIBRARY_PATH} ${GameNetworkingSockets_IMPORT_LIBRARY_PATH}
 )
 

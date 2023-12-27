@@ -52,7 +52,7 @@ option(ENABLE_ICE "Enable support for NAT-punched P2P connections using ICE prot
 option(USE_STEAMWEBRTC "Build Google's WebRTC library to get ICE support for P2P" OFF)
 option(Protobuf_USE_STATIC_LIBS "Link with protobuf statically" OFF)
 if(MSVC)
-	option(MSVC_CRT_STATIC "Link the MSVC CRT statically" OFF)
+	option(MSVC_CRT_STATIC "Link the MSVC CRT statically" ON)
 	configure_msvc_runtime()
 	print_default_msvc_flags()
 endif()
