@@ -35,7 +35,7 @@ endif()
 
 include(FlagsMSVC)
 add_definitions( -DVALVE_CRYPTO_ENABLE_25519 )
-if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+if(WIN32)
 	add_definitions(
 		-D_CRT_SECURE_NO_WARNINGS
 		-D_CRT_NONSTDC_NO_WARNINGS
@@ -51,7 +51,7 @@ option(LTO "Enable Link-Time Optimization" OFF)
 option(ENABLE_ICE "Enable support for NAT-punched P2P connections using ICE protocol.  Build native ICE client" ON)
 option(USE_STEAMWEBRTC "Build Google's WebRTC library to get ICE support for P2P" OFF)
 option(Protobuf_USE_STATIC_LIBS "Link with protobuf statically" OFF)
-if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+if(MSVC)
 	option(MSVC_CRT_STATIC "Link the MSVC CRT statically" OFF)
 	configure_msvc_runtime()
 	print_default_msvc_flags()
@@ -77,12 +77,14 @@ if(LTO)
 endif()
 
 if (WIN32)
-	#
-	# Strip compiler flags which conflict with ones we explicitly set. If we don't
-	# do this, then we get a warning on every file we compile for the library.
-	#
-	string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-	string(REPLACE "/GR" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+	if(MSVC)
+		#
+		# Strip compiler flags which conflict with ones we explicitly set. If we don't
+		# do this, then we get a warning on every file we compile for the library.
+		#
+		string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+		string(REPLACE "/GR" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+	endif()
 
 	#
 	# Check whether BCrypt can be used with this SDK version
@@ -116,7 +118,7 @@ if (USE_CRYPTO STREQUAL "OpenSSL")
 		endif()
 		check_symbol_exists(EVP_MD_CTX_free openssl/evp.h OPENSSL_NEW_ENOUGH)
 		if (NOT OPENSSL_NEW_ENOUGH)
-			message(FATAL_ERROR "Cannot find EVP_MD_CTX_free in OpenSSL headers/libs for the target architecture.  Check that you're using OpenSSL 1.1.0 or later.")
+			#message(FATAL_ERROR "Cannot find EVP_MD_CTX_free in OpenSSL headers/libs for the target architecture.  Check that you're using OpenSSL 1.1.0 or later.")
 		endif()
 	cmake_pop_check_state()
 	cmake_push_check_state()
@@ -157,15 +159,15 @@ function(set_target_common_gns_properties TGT)
 		target_compile_options(${TGT} PRIVATE -ffunction-sections -fdata-sections ${TARGET_ARCH_FLAGS})
 	endif()
 
-	if(CMAKE_SYSTEM_NAME MATCHES Linux)
+	if(LINUX)
 		target_compile_definitions(${TGT} PUBLIC LINUX)
-	elseif(CMAKE_SYSTEM_NAME MATCHES Darwin)
+	elseif(IOS)
 		target_compile_definitions(${TGT} PUBLIC OSX)
-	elseif(CMAKE_SYSTEM_NAME MATCHES FreeBSD)
+	elseif(BSD)
 		target_compile_definitions(${TGT} PUBLIC FREEBSD)
-	elseif(CMAKE_SYSTEM_NAME MATCHES Windows)
+	elseif(WIN32)
 		target_compile_definitions(${TGT} PUBLIC _WINDOWS)
-		if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+		if(MSVC)
 			if(NOT Protobuf_USE_STATIC_LIBS)
 				target_compile_definitions(${TGT} PRIVATE PROTOBUF_USE_DLLS)
 			endif()
@@ -193,7 +195,7 @@ function(set_target_common_gns_properties TGT)
 		message(FATAL_ERROR "Could not identify your target operating system")
 	endif()
 
-	if(NOT CMAKE_SYSTEM_NAME MATCHES Windows)
+	if(NOT WIN32)
 		target_compile_options(${TGT} PRIVATE -fstack-protector-strong)
 	endif()
 
@@ -226,6 +228,8 @@ add_subdirectory(src)
 
 #message(STATUS "---------------------------------------------------------")
 message(STATUS "Crypto library for AES/SHA256: ${USE_CRYPTO}")
+if(USE_CRYPTO25519)
 message(STATUS "Crypto library for ed25519/curve25519: ${USE_CRYPTO25519}")
+endif()
 message(STATUS "Link-time optimization: ${LTO}")
 #message(STATUS "---------------------------------------------------------")

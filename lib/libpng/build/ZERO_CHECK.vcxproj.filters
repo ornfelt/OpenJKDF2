@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\My files\joja\sith\OpenJKDF2\lib\libpng\build\CMakeFiles\f7a6ae47c300778ce85982774be88f9a\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1C27612F-7D6F-32A9-AF4D-D2F04BB88FE7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

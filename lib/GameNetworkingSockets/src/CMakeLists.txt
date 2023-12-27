@@ -264,7 +264,7 @@ macro(set_clientlib_target_properties GNS_TARGET)
 
 	## Needs CMake 3.8, then we could get rid of the workaround below it.
 	#target_compile_features(${GNS_TARGET} PUBLIC c_std_99 cxx_std_11)
-	if(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+	if(NOT MSVC)
 		target_compile_features(${GNS_TARGET} PUBLIC ${C99_FEATURES} ${CXX11_FEATURES})
 	endif()
 
@@ -290,18 +290,18 @@ macro(set_clientlib_target_properties GNS_TARGET)
 		endforeach()
 	endif()
 
-	if(CMAKE_SYSTEM_NAME MATCHES Linux)
+	if(LINUX)
 		#if(USE_STEAMWEBRTC AND NOT STEAMWEBRTC_USE_STATIC_LIBS)
 		#	target_link_libraries(${GNS_TARGET} PRIVATE dl)
 		#endif()
-	elseif(CMAKE_SYSTEM_NAME MATCHES Darwin)
+	elseif(IOS)
 		#if(USE_STEAMWEBRTC AND NOT STEAMWEBRTC_USE_STATIC_LIBS)
 		#	target_link_libraries(${GNS_TARGET} PRIVATE dl)
 		#endif()
-	elseif(CMAKE_SYSTEM_NAME MATCHES FreeBSD)
+	elseif(BSD)
 
-	elseif(CMAKE_SYSTEM_NAME MATCHES Windows)
-		if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+	elseif(WIN32)
+		if(MSVC)
 			get_target_property(TARGET_TYPE ${GNS_TARGET} TYPE)
 			if(NOT TARGET_TYPE STREQUAL STATIC_LIBRARY)
 				target_compile_options(${GNS_TARGET} PRIVATE
@@ -310,7 +310,7 @@ macro(set_clientlib_target_properties GNS_TARGET)
 				set_target_properties(${GNS_TARGET} PROPERTIES LINK_FLAGS "/LTCG /SUBSYSTEM:WINDOWS")
 			endif()
 		endif()
-		target_link_libraries(${GNS_TARGET} PUBLIC ws2_32 crypt32 winmm Iphlpapi)
+		target_link_libraries(${GNS_TARGET} PUBLIC ws2_32 crypt32 winmm iphlpapi)
 		if(USE_CRYPTO STREQUAL "BCrypt")
 			target_link_libraries(${GNS_TARGET} PUBLIC bcrypt)
 		endif()
@@ -414,4 +414,3 @@ install(FILES
 	${CMAKE_CURRENT_BINARY_DIR}/GameNetworkingSocketsConfig.cmake
 	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GameNetworkingSockets
 	)
-

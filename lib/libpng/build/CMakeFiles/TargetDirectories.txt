@@ -1,0 +1,3 @@
+D:/My files/joja/sith/OpenJKDF2/lib/libpng/build/CMakeFiles/libpng.dir
+D:/My files/joja/sith/OpenJKDF2/lib/libpng/build/CMakeFiles/ALL_BUILD.dir
+D:/My files/joja/sith/OpenJKDF2/lib/libpng/build/CMakeFiles/ZERO_CHECK.dir
