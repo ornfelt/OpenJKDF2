@@ -6,7 +6,7 @@ To build on Windows:
 
 2. Use CMake GUI to generate build files.
 
-3. Try to build in Debug. Some stuff will fail...
+3. Build in Release should succeed. If you want debug configuration. Try this: try to build in Debug. Some stuff will fail...
 
 4. Build in Release to generate required DLL's (or build them manually / change target DLL's).
 
